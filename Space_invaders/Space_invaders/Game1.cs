@@ -46,21 +46,24 @@ public class Game1 : Game
         enemyList = new List<Enemy>();
         windowWidth = Window.ClientBounds.Width;
         single_alien = Content.Load<Texture2D>("single_alien");
-        Random rnd = new Random();
 
-        for (int i = 0; i < 10; i++)
+        for (int y = 0; y < 3; y++)
         {
-            enemy1 = CreateEnemy(i, rnd, windowWidth);
-            enemyList.Add(enemy1);
+            for (int i = 0; i < 6; i++)
+            {
+                enemy1 = CreateEnemy(i, y, windowWidth);
+                enemyList.Add(enemy1);
+            }
         }
+
+        
 
         // TODO: use this.Content to load your game content here
     }
-
-    public Enemy CreateEnemy(int i, Random rnd, int windowWidth)
+    public Enemy CreateEnemy(int i, int y, int windowWidth)
     {
-        Vector2 velocity = new Vector2(rnd.Next(1,3), rnd.Next(100, 200) * 0.004f);
-        Enemy enemy = new Enemy(single_alien, new Vector2( i*50, 0), velocity, windowWidth);
+        Vector2 velocity = new Vector2(0, 1);
+        Enemy enemy = new Enemy(single_alien, new Vector2( i*165 + 10, y*100), velocity, windowWidth);
         return enemy;
     }
 
