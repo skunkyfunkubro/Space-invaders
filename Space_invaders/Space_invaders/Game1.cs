@@ -1,8 +1,12 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using SharpDX.Direct2D1.Effects;
+using SharpDX.X3DAudio;
 using System;
 using System.Collections.Generic;
+using System.DirectoryServices;
+using System.Linq;
 
 
 
@@ -23,6 +27,12 @@ public class Game1 : Game
     int windowWidth;
 
     List<Enemy> enemyList;
+
+    Texture2D Ship;
+
+    Player player1; 
+
+    
 
     public Game1()
     {
@@ -46,6 +56,7 @@ public class Game1 : Game
         enemyList = new List<Enemy>();
         windowWidth = Window.ClientBounds.Width;
         single_alien = Content.Load<Texture2D>("single_alien");
+        Ship = Content.Load<Texture2D>("Ship");
 
         for (int y = 0; y < 3; y++)
         {
@@ -55,6 +66,8 @@ public class Game1 : Game
                 enemyList.Add(enemy1);
             }
         }
+
+        CreatePlayer();
 
         
 
@@ -67,6 +80,12 @@ public class Game1 : Game
         return enemy;
     }
 
+    public Player CreatePlayer()
+    {
+        player1 = new Player(800, Ship, windowWidth);
+        return player1;
+    }
+
     protected override void Update(GameTime gameTime)
     {
         if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
@@ -74,10 +93,34 @@ public class Game1 : Game
 
         // TODO: Add your update logic here
 
+        if(Keyboard.GetState().IsKeyDown(Keys.Left))
+        {
+            player1.Update(-5);
+        }
+
+        if(Keyboard.GetState().IsKeyDown(Keys.Right))
+        {
+            player1.Update(5);
+        }
+
         foreach (Enemy enemy in enemyList)
         {
             enemy.Updated();
         }
+
+        int n = enemyList.Count;
+
+        for (int i = 0; i < n; i++)
+        {
+            if(enemyList[i].isDead)
+            {
+                enemyList.RemoveAt(i);
+                n --;
+            }
+        }
+
+        
+
 
         //Despawna enemy när dem är utanför border
         
@@ -92,6 +135,7 @@ public class Game1 : Game
 
         // TODO: Add your drawing code here
         _spriteBatch.Begin();
+        _spriteBatch.Draw(Ship, player1.getPosition(), Color.White);
 
         foreach (Enemy enemy in enemyList)
         {

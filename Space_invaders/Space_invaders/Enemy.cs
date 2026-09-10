@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using SharpDX.MediaFoundation;
 using System;
 using System.Collections.Generic;
 
@@ -12,7 +13,7 @@ public class Enemy
     Vector2 velocity;
     int windowWidth;
 
-    
+    public bool isDead = false;
     
 
     public Enemy(Texture2D single_alien, Vector2 pos, Vector2 velocity, int windowWidth)
@@ -33,7 +34,15 @@ public class Enemy
             velocity.X = velocity.X * -1;
         }
         pos = pos + velocity;
+
+        if(pos.Y > 900)
+        {
+            isDead = true;
+        }
     }
+
+
+    
 
     public void Draw(SpriteBatch _spriteBatch)
     {
