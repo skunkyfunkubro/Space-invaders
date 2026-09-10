@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 
 
+
 namespace Space_invaders;
 
     
@@ -27,6 +28,7 @@ public class Game1 : Game
     {
         _graphics = new GraphicsDeviceManager(this);
         Content.RootDirectory = "Content";
+        _graphics.PreferredBackBufferHeight = 900;
         IsMouseVisible = true;
     }
 
@@ -57,8 +59,8 @@ public class Game1 : Game
 
     public Enemy CreateEnemy(int i, Random rnd, int windowWidth)
     {
-        Vector2 velocity = new Vector2(rnd.Next(1,5), 0);
-        Enemy enemy = new Enemy(single_alien, new Vector2(0, i*50), velocity, windowWidth);
+        Vector2 velocity = new Vector2(rnd.Next(1,3), rnd.Next(100, 200) * 0.004f);
+        Enemy enemy = new Enemy(single_alien, new Vector2( i*50, 0), velocity, windowWidth);
         return enemy;
     }
 
@@ -73,6 +75,8 @@ public class Game1 : Game
         {
             enemy.Updated();
         }
+
+        //Despawna enemy när dem är utanför border
         
         
 

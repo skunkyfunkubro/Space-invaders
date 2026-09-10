@@ -11,13 +11,20 @@ public class Enemy
     Vector2 pos;
     Vector2 velocity;
     int windowWidth;
+
     
+    Random rnd = new Random();
 
     public Enemy(Texture2D single_alien, Vector2 pos, Vector2 velocity, int windowWidth)
     {
         this.single_alien = single_alien;
         this.pos = pos;
         this.velocity = velocity;
+        if(rnd.Next(1,3) ==2)
+        this.velocity.X = velocity.X;
+        else
+        this.velocity.X =velocity.X*-1;
+
         this.windowWidth = windowWidth;
     }
 
@@ -25,7 +32,7 @@ public class Enemy
     {
         if (pos.X < 0 || pos.X > windowWidth - single_alien.Width)
         {
-            velocity = velocity * -1;
+            velocity.X = velocity.X * -1;
         }
         pos = pos + velocity;
     }
