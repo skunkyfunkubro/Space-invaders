@@ -47,6 +47,8 @@ public class Player
         {
             pos.X --;
         }
+
+        
     }
 
     public int getLives()

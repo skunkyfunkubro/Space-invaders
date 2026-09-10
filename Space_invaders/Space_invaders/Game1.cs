@@ -49,6 +49,19 @@ public class Game1 : Game
         base.Initialize();
     }
 
+    public Enemy CreateEnemy(int i, int y, int windowWidth)
+    {
+        Vector2 velocity = new Vector2(0, 1);
+        Enemy enemy = new Enemy(single_alien, new Vector2( i*165 + 10, y*100), velocity, windowWidth);
+        return enemy;
+    }
+
+    public Player CreatePlayer()
+    {
+        player1 = new Player(800, Ship, windowWidth);
+        return player1;
+    }
+    
     protected override void LoadContent()
     {
         _spriteBatch = new SpriteBatch(GraphicsDevice);
@@ -68,23 +81,9 @@ public class Game1 : Game
         }
 
         CreatePlayer();
-
-        
-
-        // TODO: use this.Content to load your game content here
+  
     }
-    public Enemy CreateEnemy(int i, int y, int windowWidth)
-    {
-        Vector2 velocity = new Vector2(0, 1);
-        Enemy enemy = new Enemy(single_alien, new Vector2( i*165 + 10, y*100), velocity, windowWidth);
-        return enemy;
-    }
-
-    public Player CreatePlayer()
-    {
-        player1 = new Player(800, Ship, windowWidth);
-        return player1;
-    }
+    
 
     protected override void Update(GameTime gameTime)
     {
@@ -110,7 +109,7 @@ public class Game1 : Game
 
         int n = enemyList.Count;
 
-        for (int i = 0; i < n; i++)
+        for (int i = 0; i < n; i++) //flytta koden ut till en egn funktion, kalla den clear objects
         {
             if(enemyList[i].isDead)
             {
