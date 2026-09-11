@@ -44,8 +44,6 @@ public class Game1 : Game
 
     protected override void Initialize()
     {
-        // TODO: Add your initialization logic here
-
         base.Initialize();
     }
 
@@ -118,7 +116,7 @@ public class Game1 : Game
             }
         }
 
-        
+        //foreach loop som kollar isDead om den är sann plus 1 iv
 
 
         //Despawna enemy när dem är utanför border
