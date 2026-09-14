@@ -2,12 +2,14 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using SharpDX.Direct2D1.Effects;
+using SharpDX.DirectWrite;
 using SharpDX.X3DAudio;
 using System;
 using System.Collections.Generic;
 using System.DirectoryServices;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
+using System.Windows.Forms.Automation;
 
 
 
@@ -39,6 +41,11 @@ public class Game1 : Game
 
     Texture2D bullet_SI1;
 
+    Texture2D game_over2;
+
+
+    
+
     
 
     public Game1()
@@ -67,6 +74,7 @@ public class Game1 : Game
         return player1;
     }
 
+
    
     protected override void LoadContent()
     {
@@ -78,6 +86,7 @@ public class Game1 : Game
         single_alien = Content.Load<Texture2D>("single_alien");
         Ship = Content.Load<Texture2D>("Ship");
         bullet_SI1 = Content.Load<Texture2D>("bullet_SI-1");
+        game_over2 = Content.Load<Texture2D>("game_over-2");
 
         for (int y = 0; y < 3; y++)
         {
@@ -100,54 +109,67 @@ public class Game1 : Game
 
         // TODO: Add your update logic here
 
-        if(Keyboard.GetState().IsKeyDown(Keys.Left))
+        if(!player1.playerDead)
         {
-            player1.Update(-5);
-        }
-
-        if(Keyboard.GetState().IsKeyDown(Keys.Right))
-        {
-            player1.Update(5);
-        }
-
-        
-        if (Keyboard.GetState().IsKeyDown(Keys.Space))
-        {
-            Bullet1 = new Bullet(player1.getPosition(),bullet_SI1);
-            bulletList.Add(Bullet1);
-        }
-
-        foreach (Bullet Bullet1 in bulletList)
-        {
-            Bullet1.bulletUpdate();
-        }
-                                                                                          
-
-        foreach (Enemy enemy in enemyList)
-        {
-            enemy.Updated();
-        }
-
-        int n = enemyList.Count;
-
-        for (int i = 0; i < n; i++) //flytta koden ut till en egn funktion, kalla den clear objects
-        {
-            if(enemyList[i].isDead)
+            if(Keyboard.GetState().IsKeyDown(Keys.Left))
             {
-                enemyList.RemoveAt(i);
-                n --;
+                player1.Update(-5);
             }
+
+            if(Keyboard.GetState().IsKeyDown(Keys.Right))
+            {
+                player1.Update(5);
+            }
+
+            
+            if (Keyboard.GetState().IsKeyDown(Keys.Space))
+            {
+                Bullet1 = new Bullet(player1.getPosition(),bullet_SI1);
+                bulletList.Add(Bullet1);
+            }
+
+            foreach (Bullet Bullet1 in bulletList)
+            {
+                Bullet1.bulletUpdate();
+            }
+                                                                                            
+
+            foreach (Enemy enemy in enemyList)
+            {
+                enemy.Updated();
+            }
+
+            int n = enemyList.Count;
+
+            for (int i = 0; i < n; i++) //flytta koden ut till en egn funktion, kalla den clear objects
+            {
+                if(enemyList[i].isDead)
+                {
+                    enemyList.RemoveAt(i);
+                    n --;
+                    player1.looseLives();
+                }
+            }
+
+            int b = bulletList.Count;
+
+            for (int i = 0; i < b; i++)
+            {
+                if (bulletList[i].outOfBounds)
+                {
+                    bulletList.RemoveAt(i);
+                    b --;
+                }
+            }
+
+        }
+        else
+        {
+            
         }
 
+
         
-
-        //foreach loop som kollar isDead om den är sann plus 1 iv
-
-
-        //Despawna enemy när dem är utanför border
-        
-        
-
         base.Update(gameTime);
     }
 
@@ -157,6 +179,11 @@ public class Game1 : Game
 
         // TODO: Add your drawing code here
         _spriteBatch.Begin();
+        if(player1.playerDead == true)
+        {
+            _spriteBatch.Draw(game_over2, new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.White);
+        }
+
         _spriteBatch.Draw(Ship, player1.getPosition(), Color.White);
 
         foreach (Enemy enemy in enemyList)
@@ -168,7 +195,7 @@ public class Game1 : Game
         {
             Bullet1.Draw(_spriteBatch);
         }
-        
+
         _spriteBatch.End();
         base.Draw(gameTime);
     }

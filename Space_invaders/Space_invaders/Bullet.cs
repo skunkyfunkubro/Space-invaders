@@ -28,11 +28,17 @@ public class Bullet
     public void bulletUpdate()
     {
       pos.Y -= velocity; 
+
+      if(pos.Y < 0)
+        {
+          outOfBounds = true;
+        }
+    
     }
 
 
     public void Draw(SpriteBatch _spriteBatch)
-  {
-    _spriteBatch.Draw(bullet_SI1, pos, Color.Red);
-  }
+    {
+      _spriteBatch.Draw(bullet_SI1, pos, Color.Red);
+    }
 }

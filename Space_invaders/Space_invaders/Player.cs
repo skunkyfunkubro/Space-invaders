@@ -10,7 +10,7 @@ namespace Space_invaders;
 
 public class Player
 {
-    private int lives;
+    public int lives;
 
     private int maximumLives = 5;
 
@@ -21,6 +21,8 @@ public class Player
     int windowWidth;
 
     Vector2 velocity;
+
+    public bool playerDead = false;
 
 
     public Player(int windowY, Texture2D Ship,int windowWidth)
@@ -51,9 +53,22 @@ public class Player
         
     }
 
+    public void looseLives()
+    {
+        lives --;
+    }
+    
     public int getLives()
     {
         return lives;
+    }
+
+    public void gameOver()
+    {
+        if(lives <= 0)
+        {
+            playerDead = true;
+        }
     }
 
     public Vector2 getPosition()
