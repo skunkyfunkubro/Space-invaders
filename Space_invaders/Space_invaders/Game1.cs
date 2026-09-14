@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.DirectoryServices;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 
 
 
@@ -28,9 +29,15 @@ public class Game1 : Game
 
     List<Enemy> enemyList;
 
+    List<Bullet> bulletList;
+
     Texture2D Ship;
 
     Player player1; 
+
+    Bullet Bullet1;
+
+    Texture2D bullet_SI1;
 
     
 
@@ -59,15 +66,18 @@ public class Game1 : Game
         player1 = new Player(800, Ship, windowWidth);
         return player1;
     }
-    
+
+   
     protected override void LoadContent()
     {
         _spriteBatch = new SpriteBatch(GraphicsDevice);
 
         enemyList = new List<Enemy>();
+        bulletList = new List<Bullet>();
         windowWidth = Window.ClientBounds.Width;
         single_alien = Content.Load<Texture2D>("single_alien");
         Ship = Content.Load<Texture2D>("Ship");
+        bullet_SI1 = Content.Load<Texture2D>("bullet_SI-1");
 
         for (int y = 0; y < 3; y++)
         {
@@ -100,6 +110,19 @@ public class Game1 : Game
             player1.Update(5);
         }
 
+        
+        if (Keyboard.GetState().IsKeyDown(Keys.Space))
+        {
+            Bullet1 = new Bullet(player1.getPosition(),bullet_SI1);
+            bulletList.Add(Bullet1);
+        }
+
+        foreach (Bullet Bullet1 in bulletList)
+        {
+            Bullet1.bulletUpdate();
+        }
+                                                                                          
+
         foreach (Enemy enemy in enemyList)
         {
             enemy.Updated();
@@ -115,6 +138,8 @@ public class Game1 : Game
                 n --;
             }
         }
+
+        
 
         //foreach loop som kollar isDead om den är sann plus 1 iv
 
@@ -138,6 +163,12 @@ public class Game1 : Game
         {
             enemy.Draw(_spriteBatch);
         }
+
+        foreach (Bullet Bullet1 in bulletList)
+        {
+            Bullet1.Draw(_spriteBatch);
+        }
+        
         _spriteBatch.End();
         base.Draw(gameTime);
     }
