@@ -143,7 +143,7 @@ public class Game1 : Game
 
             for (int i = 0; i < n; i++) //flytta koden ut till en egn funktion, kalla den clear objects
             {
-                if(enemyList[i].isDead)
+                if(enemyList[i].isOut)
                 {
                     enemyList.RemoveAt(i);
                     n --;

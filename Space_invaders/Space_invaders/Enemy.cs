@@ -13,7 +13,7 @@ public class Enemy
     Vector2 velocity;
     int windowWidth;
 
-    public bool isDead = false;
+    public bool isOut = false;
     
 
     public Enemy(Texture2D single_alien, Vector2 pos, Vector2 velocity, int windowWidth)
@@ -37,7 +37,7 @@ public class Enemy
 
         if(pos.Y > 900)
         {
-            isDead = true;
+            isOut = true;
         }
     }
 
