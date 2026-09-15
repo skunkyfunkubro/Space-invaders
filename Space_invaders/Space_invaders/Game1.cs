@@ -148,6 +148,7 @@ public class Game1 : Game
                     enemyList.RemoveAt(i);
                     n --;
                     player1.looseLives();
+                    player1.gameOver();
                 }
             }
 
@@ -179,21 +180,23 @@ public class Game1 : Game
 
         // TODO: Add your drawing code here
         _spriteBatch.Begin();
-        if(player1.playerDead == true)
+        if(!player1.playerDead)
         {
-            _spriteBatch.Draw(game_over2, new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.White);
+            _spriteBatch.Draw(Ship, player1.getPosition(), Color.White);
+
+            foreach (Enemy enemy in enemyList)
+            {
+                enemy.Draw(_spriteBatch);
+            }
+
+            foreach (Bullet Bullet1 in bulletList)
+            {
+                Bullet1.Draw(_spriteBatch);
+            }
         }
-
-        _spriteBatch.Draw(Ship, player1.getPosition(), Color.White);
-
-        foreach (Enemy enemy in enemyList)
+        else
         {
-            enemy.Draw(_spriteBatch);
-        }
-
-        foreach (Bullet Bullet1 in bulletList)
-        {
-            Bullet1.Draw(_spriteBatch);
+             _spriteBatch.Draw(game_over2, new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.White);
         }
 
         _spriteBatch.End();
