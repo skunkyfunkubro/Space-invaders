@@ -68,7 +68,7 @@ public class Game1 : Game
     public Enemy CreateEnemy(int i, int y, int windowWidth)
     {
         Vector2 velocity = new Vector2(0, 1);
-        Enemy enemy = new Enemy(single_alien, new Vector2( i*165 + 10, y*100), velocity, windowWidth);
+        Enemy enemy = new Enemy(single_alien, new Vector2( i*165 + 15, y*100), velocity, windowWidth);
         return enemy;
     }
 
