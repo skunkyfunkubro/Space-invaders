@@ -14,6 +14,8 @@ public class Enemy
     int windowWidth;
 
     public bool isOut = false;
+
+    public Rectangle hitBox;
     
 
     public Enemy(Texture2D single_alien, Vector2 pos, Vector2 velocity, int windowWidth)
@@ -25,6 +27,8 @@ public class Enemy
         this.velocity = velocity;
 
         this.windowWidth = windowWidth;
+
+        hitBox = new Rectangle((int)pos.X, (int)pos.Y, single_alien.Width, single_alien.Height);
     }
 
     public void Updated()
@@ -39,6 +43,9 @@ public class Enemy
         {
             isOut = true;
         }
+
+        hitBox.X = (int)pos.X;
+        hitBox.Y = (int)pos.Y;
     }
 
 

@@ -43,6 +43,10 @@ public class Game1 : Game
 
     Texture2D game_over2;
 
+    private KeyboardState currentKeyBoardState;
+
+    private KeyboardState previousKeyBoardState;
+
 
     
 
@@ -104,7 +108,10 @@ public class Game1 : Game
 
     protected override void Update(GameTime gameTime)
     {
+        currentKeyBoardState = Keyboard.GetState(); 
+        
         if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
+    
             Exit();
 
         // TODO: Add your update logic here
@@ -127,6 +134,8 @@ public class Game1 : Game
                 Bullet1 = new Bullet(player1.getPosition(),bullet_SI1);
                 bulletList.Add(Bullet1);
             }
+
+            previousKeyBoardState = currentKeyBoardState;
 
             foreach (Bullet Bullet1 in bulletList)
             {

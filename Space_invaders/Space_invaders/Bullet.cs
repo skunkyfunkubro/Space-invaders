@@ -16,12 +16,16 @@ public class Bullet
     Vector2 pos;
     Texture2D bullet_SI1;
     public bool outOfBounds = false;
+
+    public Rectangle hitBox;
     
 
     public Bullet(Vector2 pos, Texture2D bullet_SI1)
     {  
       this.pos = pos;
       this.bullet_SI1 = bullet_SI1;
+
+      hitBox = new Rectangle((int)pos.X, (int)pos.Y, bullet_SI1.Width, bullet_SI1.Height);
     }
 
 
@@ -33,7 +37,9 @@ public class Bullet
         {
           outOfBounds = true;
         }
-    
+
+      hitBox.X = (int)pos.X;
+      hitBox.Y = (int)pos.Y;
     }
 
 
