@@ -18,6 +18,7 @@ public class Bullet
     public bool outOfBounds = false;
 
     public Rectangle hitBox;
+
     
 
     public Bullet(Vector2 pos, Texture2D bullet_SI1)

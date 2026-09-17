@@ -129,9 +129,11 @@ public class Game1 : Game
             }
 
             
-            if (Keyboard.GetState().IsKeyDown(Keys.Space))
+            if (currentKeyBoardState.IsKeyDown(Keys.Space) && previousKeyBoardState.IsKeyUp(Keys.Space))
             {
-                Bullet1 = new Bullet(player1.getPosition(),bullet_SI1);
+                Vector2 playerPos = player1.getPosition();
+                playerPos.X = playerPos.X + player1.Ship.Width / 2 - bullet_SI1.Width / 2;
+                Bullet1 = new Bullet(playerPos,bullet_SI1);
                 bulletList.Add(Bullet1);
             }
 
@@ -169,6 +171,22 @@ public class Game1 : Game
                 {
                     bulletList.RemoveAt(i);
                     b --;
+                }
+            }
+
+            for (int i = enemyList.Count -1; i >= 0; i--)
+            {
+                for (int k = bulletList.Count -1; k >= 0; k--)
+                {
+                    if (enemyList[i].hitBox.Intersects(bulletList[k].hitBox))
+                    {
+                        enemyList.RemoveAt(i);
+                        bulletList.RemoveAt(k);
+
+                        //score += 100;
+
+                        break;
+                    }
                 }
             }
 

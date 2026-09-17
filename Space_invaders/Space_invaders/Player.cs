@@ -14,9 +14,9 @@ public class Player
 
     private int maximumLives = 5;
 
-    private Vector2 pos;
+    public Vector2 pos;
 
-    Texture2D Ship; 
+    public Texture2D Ship; 
 
     int windowWidth;
 
