@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using SharpDX.Direct2D1.Effects;
+using SharpDX.Direct3D9;
 using SharpDX.DirectWrite;
 using SharpDX.X3DAudio;
 using System;
@@ -47,6 +48,12 @@ public class Game1 : Game
 
     private KeyboardState previousKeyBoardState;
 
+    private GamePadState _gameState = new GamePadState();
+
+    private int score;
+
+    private SpriteFont _scoreFont;
+
 
     
 
@@ -62,6 +69,7 @@ public class Game1 : Game
 
     protected override void Initialize()
     {
+        score = 0;
         base.Initialize();
     }
 
@@ -91,6 +99,7 @@ public class Game1 : Game
         Ship = Content.Load<Texture2D>("Ship");
         bullet_SI1 = Content.Load<Texture2D>("bullet_SI-1");
         game_over2 = Content.Load<Texture2D>("game_over-2");
+        //_scoreFont = Content.Load<SpriteFont>("score");
 
         for (int y = 0; y < 3; y++)
         {
@@ -183,7 +192,7 @@ public class Game1 : Game
                         enemyList.RemoveAt(i);
                         bulletList.RemoveAt(k);
 
-                        //score += 100;
+                        score += 100;
 
                         break;
                     }
@@ -196,7 +205,7 @@ public class Game1 : Game
             
         }
 
-
+        
         
         base.Update(gameTime);
     }
@@ -227,6 +236,9 @@ public class Game1 : Game
         }
 
         _spriteBatch.End();
+
+        Window.Title = $"Space Invaders - Score {score} - Lives {player1.lives}";
+
         base.Draw(gameTime);
     }
 }
