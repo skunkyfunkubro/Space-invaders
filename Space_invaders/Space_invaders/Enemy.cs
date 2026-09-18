@@ -49,8 +49,6 @@ public class Enemy
     }
 
 
-    
-
     public void Draw(SpriteBatch _spriteBatch)
     {
         _spriteBatch.Draw(single_alien, pos, Color.White);

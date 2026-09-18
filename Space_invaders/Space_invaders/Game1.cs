@@ -21,8 +21,6 @@ public class Game1 : Game
 {
     private GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
-
-
     Texture2D single_alien;
     Vector2 pos;
     Vector2 pos2;
@@ -99,7 +97,6 @@ public class Game1 : Game
         Ship = Content.Load<Texture2D>("Ship");
         bullet_SI1 = Content.Load<Texture2D>("bullet_SI-1");
         game_over2 = Content.Load<Texture2D>("game_over-2");
-        //_scoreFont = Content.Load<SpriteFont>("score");
 
         for (int y = 0; y < 3; y++)
         {
@@ -111,7 +108,7 @@ public class Game1 : Game
         }
 
         CreatePlayer();
-  
+
     }
     
 
@@ -122,8 +119,6 @@ public class Game1 : Game
         if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
     
             Exit();
-
-        // TODO: Add your update logic here
 
         if(!player1.playerDead)
         {
@@ -137,7 +132,6 @@ public class Game1 : Game
                 player1.Update(5);
             }
 
-            
             if (currentKeyBoardState.IsKeyDown(Keys.Space) && previousKeyBoardState.IsKeyUp(Keys.Space))
             {
                 Vector2 playerPos = player1.getPosition();
@@ -153,7 +147,6 @@ public class Game1 : Game
                 Bullet1.bulletUpdate();
             }
                                                                                             
-
             foreach (Enemy enemy in enemyList)
             {
                 enemy.Updated();
@@ -161,7 +154,7 @@ public class Game1 : Game
 
             int n = enemyList.Count;
 
-            for (int i = 0; i < n; i++) //flytta koden ut till en egn funktion, kalla den clear objects
+            for (int i = 0; i < n; i++) 
             {
                 if(enemyList[i].isOut)
                 {
@@ -200,12 +193,6 @@ public class Game1 : Game
             }
 
         }
-        else
-        {
-            
-        }
-
-        
         
         base.Update(gameTime);
     }
@@ -214,8 +201,8 @@ public class Game1 : Game
     {
         GraphicsDevice.Clear(Color.CornflowerBlue);
 
-        // TODO: Add your drawing code here
         _spriteBatch.Begin();
+
         if(!player1.playerDead)
         {
             _spriteBatch.Draw(Ship, player1.getPosition(), Color.White);
@@ -230,6 +217,7 @@ public class Game1 : Game
                 Bullet1.Draw(_spriteBatch);
             }
         }
+        
         else
         {
              _spriteBatch.Draw(game_over2, new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.White);
