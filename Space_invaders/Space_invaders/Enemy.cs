@@ -33,9 +33,10 @@ public class Enemy
 
     public void Updated()
     {
-        if (pos.X < 0 || pos.X > windowWidth - single_alien.Width)
+        if (pos.X < 0 || pos.X > windowWidth - single_alien.Width) //Detta gör att de rör sig från border till border sen går ner en rad
         {
             velocity.X = velocity.X * -1;
+            pos.Y = pos.Y + single_alien.Height;
         }
         pos = pos + velocity;
 

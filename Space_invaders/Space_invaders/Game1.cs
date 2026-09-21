@@ -69,7 +69,7 @@ public class Game1 : Game
 
     public Enemy CreateEnemy(int i, int y, int windowWidth)
     {
-        Vector2 velocity = new Vector2(0, 1);
+        Vector2 velocity = new Vector2(1, 0); //ändra så de rör sig i x led istället
         Enemy enemy = new Enemy(single_alien, new Vector2( i*165 + 15, y*100), velocity, windowWidth);
         return enemy;
     }
@@ -80,8 +80,6 @@ public class Game1 : Game
         return player1;
     }
 
-
-   
     protected override void LoadContent()
     {
         _spriteBatch = new SpriteBatch(GraphicsDevice);
