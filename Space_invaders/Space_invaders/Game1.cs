@@ -53,10 +53,6 @@ public class Game1 : Game
     private SpriteFont _scoreFont;
 
 
-    
-
-    
-
     public Game1()
     {
         _graphics = new GraphicsDeviceManager(this);
@@ -167,7 +163,7 @@ public class Game1 : Game
 
             int b = bulletList.Count;
 
-            for (int i = 0; i < b; i++)
+            for (int i = 0; i < b; i++) //lägg till foreach för out of bounds
             {
                 if (bulletList[i].outOfBounds)
                 {
