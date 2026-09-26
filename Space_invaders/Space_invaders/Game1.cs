@@ -27,6 +27,7 @@ public class Game1 : Game
 
     Enemy enemy1;
     int windowWidth;
+    int windowHeight;
 
     List<Enemy> enemyList;
 
@@ -42,6 +43,10 @@ public class Game1 : Game
 
     Texture2D game_over2;
 
+    Texture2D Startknapp;
+
+    Rectangle startRec;
+
     private KeyboardState currentKeyBoardState;
 
     private KeyboardState previousKeyBoardState;
@@ -51,6 +56,18 @@ public class Game1 : Game
     private int score;
 
     private SpriteFont _scoreFont;
+
+    private bool isMouseOver = false;
+
+    //Texture2D pixel;
+    private enum gameState
+    {
+        mainMenu, easyMode, hardMode, gameOver
+    }
+    
+    
+
+    gameState currentGameState = gameState.mainMenu;
 
 
     public Game1()
@@ -69,7 +86,7 @@ public class Game1 : Game
 
     public Enemy CreateEnemy(int i, int y, int windowWidth)
     {
-        Vector2 velocity = new Vector2(1, 0); //ändra så de rör sig i x led istället
+        Vector2 velocity = new Vector2(5, 0); //ändra så de rör sig i x led istället
         Enemy enemy = new Enemy(single_alien, new Vector2( i*165 + 15, y*100), velocity, windowWidth);
         return enemy;
     }
@@ -87,10 +104,13 @@ public class Game1 : Game
         enemyList = new List<Enemy>();
         bulletList = new List<Bullet>();
         windowWidth = Window.ClientBounds.Width;
+        windowHeight = Window.ClientBounds.Height;
         single_alien = Content.Load<Texture2D>("single_alien");
         Ship = Content.Load<Texture2D>("Ship");
         bullet_SI1 = Content.Load<Texture2D>("bullet_SI-1");
         game_over2 = Content.Load<Texture2D>("game_over-2");
+        Startknapp = Content.Load<Texture2D>("Startknapp");
+        startRec = new Rectangle(windowWidth / 2 - Startknapp.Width / 2, windowHeight / 2 - Startknapp.Height, Startknapp.Width, Startknapp.Height);
 
         for (int y = 0; y < 3; y++)
         {
@@ -109,12 +129,25 @@ public class Game1 : Game
     protected override void Update(GameTime gameTime)
     {
         currentKeyBoardState = Keyboard.GetState(); 
+        MouseState mouseState = Mouse.GetState();
         
         if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
     
             Exit();
 
-        if(!player1.playerDead)
+        
+        if(currentGameState == gameState.mainMenu)
+        {
+            
+            if (startRec.Contains(mouseState.Position) && mouseState.LeftButton == ButtonState.Pressed)
+            {
+                currentGameState = gameState.easyMode;
+            }
+            return;
+
+        }
+        
+        if(currentGameState == gameState.easyMode)
         {
             if(Keyboard.GetState().IsKeyDown(Keys.Left))
             {
@@ -186,8 +219,15 @@ public class Game1 : Game
                 }
             }
 
+            if(player1.playerDead) currentGameState = gameState.gameOver;
+
         }
         
+        if(currentGameState == gameState.gameOver)
+        {
+            //lägg in kod för att displaya poäng
+        }
+
         base.Update(gameTime);
     }
 
@@ -197,7 +237,18 @@ public class Game1 : Game
 
         _spriteBatch.Begin();
 
-        if(!player1.playerDead)
+        if (currentGameState == gameState.mainMenu)
+        {
+            if(Startknapp != null)
+            {
+                _spriteBatch.Draw(Startknapp, startRec, Color.White);
+                //_spriteBatch.Draw(pixel, startRec, Color.Red);
+            }
+            _spriteBatch.End();
+            return;
+        }
+        
+        if(currentGameState == gameState.easyMode)
         {
             _spriteBatch.Draw(Ship, player1.getPosition(), Color.White);
 
@@ -212,7 +263,7 @@ public class Game1 : Game
             }
         }
         
-        else
+        if(currentGameState == gameState.gameOver)
         {
              _spriteBatch.Draw(game_over2, new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.White);
         }

@@ -40,7 +40,7 @@ public class Enemy
         }
         pos = pos + velocity;
 
-        if(pos.Y > 900)
+        if(pos.Y > 900 - single_alien.Height)
         {
             isOut = true;
         }
