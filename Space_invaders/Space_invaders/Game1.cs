@@ -72,6 +72,12 @@ public class Game1 : Game
     Point frameSize = new Point (75, 75);
     Point currentFrame = new Point(0, 0);
     Point sheetSize = new Point(6, 8);
+    Vector2 alienPos;
+    Vector2 alienVelocity = new Vector2(5, 0);
+    int timeSinceLastFrame = 0;
+    int milliSecondsPerFrame = 100; 
+
+    SoundEffect shoot;
     
     
 
@@ -93,6 +99,7 @@ public class Game1 : Game
         score = 0;
         base.Initialize();
     }
+ 
 
     public Enemy CreateEnemy(int i, int y, int windowWidth)
     {
@@ -115,6 +122,7 @@ public class Game1 : Game
         bulletList = new List<Bullet>();
         windowWidth = Window.ClientBounds.Width;
         windowHeight = Window.ClientBounds.Height;
+        alienPos = new Vector2((windowWidth - frameSize.X) / 2f, (windowHeight - frameSize.Y) / 2f);
         single_alien = Content.Load<Texture2D>("single_alien");
         Ship = Content.Load<Texture2D>("Ship");
         bullet_SI1 = Content.Load<Texture2D>("bullet_SI-1");
@@ -122,6 +130,7 @@ public class Game1 : Game
         game_over2 = Content.Load<Texture2D>("game_over-2");
         Startknapp = Content.Load<Texture2D>("Startknapp");
         startRec = new Rectangle(windowWidth / 2 - Startknapp.Width / 2, windowHeight / 2 - Startknapp.Height, Startknapp.Width, Startknapp.Height);
+        shoot = Content.Load<SoundEffect>("shoot");
 
         for (int y = 0; y < 3; y++)
         {
@@ -149,10 +158,21 @@ public class Game1 : Game
         
         if(currentGameState == gameState.mainMenu)
         {
-            ++currentFrame.X;
-            if(currentFrame.X >= sheetSize.X)
+            timeSinceLastFrame += gameTime.ElapsedGameTime.Milliseconds;
+            if(timeSinceLastFrame > milliSecondsPerFrame)
             {
-                currentFrame.X = 0;
+                timeSinceLastFrame -= milliSecondsPerFrame;
+                ++currentFrame.X;
+                if(currentFrame.X >= sheetSize.X)
+                {
+                    currentFrame.X = 0;
+                }
+                
+                if (alienPos.X < 0 || alienPos.X > windowWidth - alien02_sprites.Width / 4) //Detta gör att de rör sig från border till border sen går ner en rad
+                {
+                    alienVelocity.X = alienVelocity.X * -1;
+                }
+                alienPos = alienPos += alienVelocity;
             }
 
             if (startRec.Contains(mouseState.Position) && mouseState.LeftButton == ButtonState.Pressed)
@@ -180,6 +200,7 @@ public class Game1 : Game
                 playerPos.X = playerPos.X + player1.Ship.Width / 2 - bullet_SI1.Width / 2;
                 Bullet1 = new Bullet(playerPos,bullet_SI1);
                 bulletList.Add(Bullet1);
+                shoot.Play();
             }
 
             previousKeyBoardState = currentKeyBoardState;
@@ -254,7 +275,7 @@ public class Game1 : Game
 
         if (currentGameState == gameState.mainMenu)
         {
-            _spriteBatch.Draw(alien02_sprites, Vector2.Zero, new Rectangle(currentFrame.X * frameSize.X, currentFrame.Y * frameSize.Y, frameSize.X, frameSize.Y), Color.White, 0, Vector2.Zero, 1, SpriteEffects.None, 0);
+            _spriteBatch.Draw(alien02_sprites, alienPos, new Rectangle(currentFrame.X * frameSize.X, currentFrame.Y * frameSize.Y, frameSize.X, frameSize.Y), Color.White, 0, Vector2.Zero, 1, SpriteEffects.None, 0);
             
             if(Startknapp != null)
             {

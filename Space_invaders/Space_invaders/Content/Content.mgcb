@@ -65,6 +65,13 @@
 /processorParam:Version=3.8.5.1
 /build:Ship.png
 
+#begin shoot.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/processorParam:Version=3.8.5.1
+/build:shoot.wav
+
 #begin single_alien.png
 /importer:TextureImporter
 /processor:TextureProcessor
