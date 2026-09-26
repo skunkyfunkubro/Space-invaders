@@ -9,6 +9,9 @@ using System;
 using System.Collections.Generic;
 using System.DirectoryServices;
 using System.Linq;
+using Microsoft.Xna.Framework.Audio; 
+using Microsoft.Xna.Framework.Media;
+
 using System.Security.Cryptography.X509Certificates;
 using System.Windows.Forms.Automation;
 
@@ -64,10 +67,17 @@ public class Game1 : Game
     {
         mainMenu, easyMode, hardMode, gameOver
     }
+
+    Texture2D alien02_sprites;
+    Point frameSize = new Point (75, 75);
+    Point currentFrame = new Point(0, 0);
+    Point sheetSize = new Point(6, 8);
     
     
 
     gameState currentGameState = gameState.mainMenu;
+
+    int [,] grid = { {1, 2, 3}, {4, 5, 6}};
 
 
     public Game1()
@@ -108,6 +118,7 @@ public class Game1 : Game
         single_alien = Content.Load<Texture2D>("single_alien");
         Ship = Content.Load<Texture2D>("Ship");
         bullet_SI1 = Content.Load<Texture2D>("bullet_SI-1");
+        alien02_sprites = Content.Load<Texture2D>(@"alien02_sprites");
         game_over2 = Content.Load<Texture2D>("game_over-2");
         Startknapp = Content.Load<Texture2D>("Startknapp");
         startRec = new Rectangle(windowWidth / 2 - Startknapp.Width / 2, windowHeight / 2 - Startknapp.Height, Startknapp.Width, Startknapp.Height);
@@ -138,13 +149,17 @@ public class Game1 : Game
         
         if(currentGameState == gameState.mainMenu)
         {
-            
+            ++currentFrame.X;
+            if(currentFrame.X >= sheetSize.X)
+            {
+                currentFrame.X = 0;
+            }
+
             if (startRec.Contains(mouseState.Position) && mouseState.LeftButton == ButtonState.Pressed)
             {
                 currentGameState = gameState.easyMode;
             }
             return;
-
         }
         
         if(currentGameState == gameState.easyMode)
@@ -239,6 +254,8 @@ public class Game1 : Game
 
         if (currentGameState == gameState.mainMenu)
         {
+            _spriteBatch.Draw(alien02_sprites, Vector2.Zero, new Rectangle(currentFrame.X * frameSize.X, currentFrame.Y * frameSize.Y, frameSize.X, frameSize.Y), Color.White, 0, Vector2.Zero, 1, SpriteEffects.None, 0);
+            
             if(Startknapp != null)
             {
                 _spriteBatch.Draw(Startknapp, startRec, Color.White);
