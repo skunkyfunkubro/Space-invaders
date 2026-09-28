@@ -103,12 +103,12 @@ public class Game1 : Game
     }
  
 
-    public Enemy CreateEnemy(int i, int y, int windowWidth)
+    /*public Enemy CreateEnemy(int i, int y, int windowWidth)
     {
         Vector2 velocity = new Vector2(5, 0); //ändra så de rör sig i x led istället
         Enemy enemy = new Enemy(single_alien, new Vector2( i*165 + 15, y*100), velocity, windowWidth);
         return enemy;
-    }
+    }*/
 
     public Player CreatePlayer()
     {
@@ -135,14 +135,15 @@ public class Game1 : Game
         startRec = new Rectangle(windowWidth / 2 - Startknapp.Width / 2, windowHeight / 2 - Startknapp.Height, Startknapp.Width, Startknapp.Height);
         shoot = Content.Load<SoundEffect>("shoot");
 
-        for (int y = 0; y < 3; y++)
+        /*for (int y = 0; y < 3; y++)
         {
             for (int i = 0; i < 6; i++)
             {
                 enemy1 = CreateEnemy(i, y, windowWidth);
                 enemyList.Add(enemy1);
             }
-        }
+        }*/
+
 
         CreatePlayer();
 
@@ -213,9 +214,9 @@ public class Game1 : Game
                 Bullet1.bulletUpdate();
             }
                                                                                             
-            foreach (Enemy enemy in enemyList)
+            foreach (Enemy[Rows, Columns])
             {
-                enemy.Updated();
+                enemy1.Updated();
             }
 
             int n = enemyList.Count;

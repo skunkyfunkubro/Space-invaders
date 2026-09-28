@@ -8,8 +8,8 @@ namespace Space_invaders
 {
     public class EnemyManager
     {
-
-    
+        public Enemy[,] enemyGrid {get; private set;}
+        public Enemy[,] enemies;
         private const int Rows = 5;
         private const int Column = 6;
 
