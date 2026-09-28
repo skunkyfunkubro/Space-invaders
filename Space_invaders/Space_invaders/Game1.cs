@@ -78,6 +78,7 @@ public class Game1 : Game
     Vector2 alienVelocity = new Vector2(5, 0);
     int timeSinceLastFrame = 0;
     int milliSecondsPerFrame = 100; 
+    EnemyManager enemyManager;
 
     SoundEffect shoot;
     
@@ -134,6 +135,7 @@ public class Game1 : Game
         Stars_panorama_sheet = Content.Load<Texture2D>("Stars_panorama_sheet");
         startRec = new Rectangle(windowWidth / 2 - Startknapp.Width / 2, windowHeight / 2 - Startknapp.Height, Startknapp.Width, Startknapp.Height);
         shoot = Content.Load<SoundEffect>("shoot");
+        enemyManager = new EnemyManager(single_alien, 50, 50, 50, 50, windowWidth, new Vector2 (5, 0));
 
         /*for (int y = 0; y < 3; y++)
         {
@@ -214,10 +216,10 @@ public class Game1 : Game
                 Bullet1.bulletUpdate();
             }
                                                                                             
-            foreach (Enemy[Rows, Columns])
+            /*foreach (var enemy1 in Enemy[Rows, Columns])
             {
                 enemy1.Updated();
-            }
+            }*/
 
             int n = enemyList.Count;
 
@@ -295,10 +297,14 @@ public class Game1 : Game
              _spriteBatch.Draw(Stars_panorama_sheet, new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.White);
             _spriteBatch.Draw(Ship, player1.getPosition(), Color.White);
 
-            foreach (Enemy enemy in enemyList)
+            enemyManager.Draw(_spriteBatch);
+
+            /*foreach (Enemy enemy in enemyList)
             {
                 enemy.Draw(_spriteBatch);
-            }
+            }*/
+
+            enemyManager.Draw(_spriteBatch);
 
             foreach (Bullet Bullet1 in bulletList)
             {
