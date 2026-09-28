@@ -31,6 +31,7 @@ public class Game1 : Game
     Enemy enemy1;
     int windowWidth;
     int windowHeight;
+    
 
     List<Enemy> enemyList;
 
@@ -49,6 +50,7 @@ public class Game1 : Game
     Texture2D Startknapp;
 
     Rectangle startRec;
+    Texture2D Stars_panorama_sheet;
 
     private KeyboardState currentKeyBoardState;
 
@@ -83,7 +85,7 @@ public class Game1 : Game
 
     gameState currentGameState = gameState.mainMenu;
 
-    int [,] grid = { {1, 2, 3}, {4, 5, 6}};
+  
 
 
     public Game1()
@@ -129,6 +131,7 @@ public class Game1 : Game
         alien02_sprites = Content.Load<Texture2D>(@"alien02_sprites");
         game_over2 = Content.Load<Texture2D>("game_over-2");
         Startknapp = Content.Load<Texture2D>("Startknapp");
+        Stars_panorama_sheet = Content.Load<Texture2D>("Stars_panorama_sheet");
         startRec = new Rectangle(windowWidth / 2 - Startknapp.Width / 2, windowHeight / 2 - Startknapp.Height, Startknapp.Width, Startknapp.Height);
         shoot = Content.Load<SoundEffect>("shoot");
 
@@ -269,7 +272,7 @@ public class Game1 : Game
 
     protected override void Draw(GameTime gameTime)
     {
-        GraphicsDevice.Clear(Color.CornflowerBlue);
+        GraphicsDevice.Clear(Color.Black);
 
         _spriteBatch.Begin();
 
@@ -288,6 +291,7 @@ public class Game1 : Game
         
         if(currentGameState == gameState.easyMode)
         {
+             _spriteBatch.Draw(Stars_panorama_sheet, new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.White);
             _spriteBatch.Draw(Ship, player1.getPosition(), Color.White);
 
             foreach (Enemy enemy in enemyList)
