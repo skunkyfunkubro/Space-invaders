@@ -8,9 +8,9 @@ using System.Collections.Generic;
 namespace Space_invaders;
 public class Enemy 
 {
-    Texture2D single_alien;
-    Vector2 pos;
-    Vector2 velocity;
+    public Texture2D single_alien;
+    public Vector2 pos;
+    public Vector2 velocity;
     int windowWidth;
 
     public bool isOut = false;

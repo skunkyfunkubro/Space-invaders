@@ -79,6 +79,11 @@ public class Game1 : Game
     int timeSinceLastFrame = 0;
     int milliSecondsPerFrame = 100; 
     EnemyManager enemyManager;
+    int spacingX = 120;
+    int spacingY = 120;
+    int startX = 30;
+    int startY = 100;
+
 
     SoundEffect shoot;
     
@@ -93,7 +98,9 @@ public class Game1 : Game
     {
         _graphics = new GraphicsDeviceManager(this);
         Content.RootDirectory = "Content";
-        _graphics.PreferredBackBufferHeight = 900;
+        _graphics.PreferredBackBufferHeight = 1000;
+        _graphics.PreferredBackBufferWidth = 1000;
+        _graphics.ApplyChanges();
         IsMouseVisible = true;
     }
 
@@ -135,7 +142,7 @@ public class Game1 : Game
         Stars_panorama_sheet = Content.Load<Texture2D>("Stars_panorama_sheet");
         startRec = new Rectangle(windowWidth / 2 - Startknapp.Width / 2, windowHeight / 2 - Startknapp.Height, Startknapp.Width, Startknapp.Height);
         shoot = Content.Load<SoundEffect>("shoot");
-        enemyManager = new EnemyManager(single_alien, 50, 50, 50, 50, windowWidth, new Vector2 (5, 0));
+        enemyManager = new EnemyManager(single_alien, spacingX, spacingY, startX, startY, windowWidth, new Vector2 (5, 0));
 
         /*for (int y = 0; y < 3; y++)
         {
@@ -210,6 +217,8 @@ public class Game1 : Game
             }
 
             previousKeyBoardState = currentKeyBoardState;
+
+            enemyManager.Update(gameTime, single_alien);
 
             foreach (Bullet Bullet1 in bulletList)
             {
