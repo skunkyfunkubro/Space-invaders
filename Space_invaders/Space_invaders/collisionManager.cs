@@ -28,7 +28,11 @@ namespace Space_invaders
                         if(enemy != null && enemy.hitBox.Intersects(bullets[k].hitBox))
                         {
                             bullets.RemoveAt(k);
-                            enemyManager.dead(row, column);
+                            enemy.enemyLives --;
+                            if(enemy.enemyLives <= 0)
+                            {
+                                enemyManager.Dead(row, column);
+                            }
                             hit = true;
                             break;
                             

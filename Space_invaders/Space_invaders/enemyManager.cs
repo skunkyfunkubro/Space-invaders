@@ -9,15 +9,16 @@ namespace Space_invaders
     public class EnemyManager
     {
         public Enemy[,] enemies;
-        private const int Rows = 8;
-        private const int Column = 5;
-        int spacingX, spacingY, startX, startY, windowWidth;
+        private const int Rows = 5;
+        private const int Column = 8;
+        int spacingX, spacingY, startX, startY, windowWidth; 
         public Vector2 velocity = new Vector2(3, 0);
+        
         
 
     
 
-        public EnemyManager(Texture2D single_alien, int spacingX, int spacingY, int startX, int startY, int windowWidth, Vector2 velocity)
+        public EnemyManager(Texture2D[] alienTexture, int spacingX, int spacingY, int startX, int startY, int windowWidth, Vector2 velocity)
         {
             enemies = new Enemy[Rows, Column];
             this.windowWidth = windowWidth;
@@ -27,8 +28,28 @@ namespace Space_invaders
             {
                 for(int column = 0; column < Column; column++)
                 {
-                    Vector2 spawnPosition = new Vector2(startX + (spacingX * row), startY + (spacingY * column));
-                    enemies[row, column] = new Enemy(single_alien, spawnPosition, velocity, windowWidth);
+                    Texture2D textureForThisRow;
+                    int Lives;
+
+                    if(row < 2)
+                    {
+                        textureForThisRow = alienTexture[0];
+                        Lives = 3;
+                    }
+
+                    else if(row < 3)
+                    {
+                        textureForThisRow = alienTexture[1];
+                        Lives = 2;
+                    }
+
+                    else
+                    {
+                        textureForThisRow = alienTexture[2];
+                        Lives = 1;
+                    }
+                    Vector2 spawnPosition = new Vector2(startX + (spacingX * column), startY + (spacingY * row));
+                    enemies[row, column] = new Enemy(textureForThisRow, spawnPosition, velocity, windowWidth, Lives);
                 }
             }
         }
@@ -37,7 +58,7 @@ namespace Space_invaders
         {
             foreach(Enemy enemy in enemies)
             {
-                if(enemy != null && enemy.pos.Y >= 950)
+                if(enemy != null && enemy.pos.Y >= 900)
                 {
                     return true;
                 }
@@ -100,7 +121,7 @@ namespace Space_invaders
                 enemy1.hitBox.Y = (int)enemy1.pos.Y;
             }
         }
-        public void dead(int row, int column)
+        public void Dead(int row, int column)
         {
             if(row < 0 || row >= Rows || column < 0 || column >= Column)
             {

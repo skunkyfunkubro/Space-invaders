@@ -16,9 +16,10 @@ public class Enemy
     public bool isOut = false;
 
     public Rectangle hitBox;
+    public int enemyLives {get; set; }
     
 
-    public Enemy(Texture2D single_alien, Vector2 pos, Vector2 velocity, int windowWidth)
+    public Enemy(Texture2D single_alien, Vector2 pos, Vector2 velocity, int windowWidth, int enemyLives)
     {
         this.single_alien = single_alien;
         
@@ -27,16 +28,27 @@ public class Enemy
         this.velocity = velocity;
 
         this.windowWidth = windowWidth;
+        this.enemyLives = enemyLives;
 
         hitBox = new Rectangle((int)pos.X, (int)pos.Y, single_alien.Width, single_alien.Height);
     }
 
-    public void isAtBottom()
+    public void Updated()
     {
+        if (pos.X < 0 || pos.X > windowWidth - single_alien.Width) //Detta gör att de rör sig från border till border sen går ner en rad
+        {
+            velocity.X = velocity.X * -1;
+            pos.Y = pos.Y + single_alien.Height;
+        }
+        pos = pos + velocity;
+
         if(pos.Y > 900 - single_alien.Height)
         {
             isOut = true;
         }
+
+        hitBox.X = (int)pos.X;
+        hitBox.Y = (int)pos.Y;
     }
 
 
