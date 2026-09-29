@@ -86,11 +86,8 @@ namespace Space_invaders
                 enemy1.hitBox.X = (int)enemy1.pos.X;
                 enemy1.hitBox.Y = (int)enemy1.pos.Y;
             }
-
-           
-
         }
-        public void damage(int row, int column)
+        public void dead(int row, int column)
         {
             if(row < 0 || row >= Rows || column < 0 || column >= Column)
             {

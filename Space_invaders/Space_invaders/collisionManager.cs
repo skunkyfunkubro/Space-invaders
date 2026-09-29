@@ -14,7 +14,6 @@ namespace Space_invaders
         
         public void checkCollision(EnemyManager enemyManager, List<Bullet> bullets)
         {
-            
             Enemy[,] enemies = enemyManager.enemies;
             for (int k = bullets.Count -1; k >= 0; k--)
             {
@@ -29,7 +28,7 @@ namespace Space_invaders
                         if(enemy != null && enemy.hitBox.Intersects(bullets[k].hitBox))
                         {
                             bullets.RemoveAt(k);
-                            enemyManager.damage(row, column);
+                            enemyManager.dead(row, column);
                             hit = true;
                             break;
                             
@@ -44,4 +43,5 @@ namespace Space_invaders
             }
         }
     }
+    
 }

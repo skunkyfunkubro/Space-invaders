@@ -210,6 +210,7 @@ public class Game1 : Game
                 Bullet1.bulletUpdate();
             }
             collisionManager.checkCollision(enemyManager, bulletList);
+            
                                                                                             
             /*foreach (var enemy1 in Enemy[Rows, Columns])
             {
