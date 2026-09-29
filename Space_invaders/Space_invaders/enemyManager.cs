@@ -19,6 +19,8 @@ namespace Space_invaders
         public EnemyManager(Texture2D single_alien, int spacingX, int spacingY, int startX, int startY, int windowWidth, Vector2 velocity)
         {
             enemies = new Enemy[Rows, Column];
+            this.windowWidth = windowWidth;
+            this.velocity = velocity;
             
             for(int row = 0; row < Rows; row++)
             {
@@ -35,22 +37,66 @@ namespace Space_invaders
         {
             foreach (var enemy1 in enemies) 
             {
+                if (enemy1 == null)
+                {
+                    continue;
+                }
                 enemy1.Draw(spriteBatch);
             }
         }
 
         public void Update(GameTime gameTime, Texture2D single_alien)
         {
-            float DeltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
+            bool reachedEdge = false;
             foreach (var enemy1 in enemies)
             {
-                if (enemy1.pos.X < 0 || enemy1.pos.X > windowWidth - single_alien.Width)
+                if (enemy1 == null)
                 {
-                    enemy1.velocity.X = enemy1.velocity.X * -1;
-                    enemy1.pos.Y = enemy1.pos.Y + 10;
+                    continue;
                 }
-                enemy1.pos = enemy1.pos + velocity;
+                float nextX = enemy1.pos.X + velocity.X;
+                if (nextX < 0 || nextX > windowWidth - single_alien.Width)
+                {
+                    reachedEdge = true;
+                    break;
+                }
             }
+
+            if (reachedEdge)
+            {
+                velocity.X *= -1;
+                foreach (var enemy1 in enemies)
+                {
+                    if (enemy1 == null)
+                    {
+                        continue;
+                    }
+                    enemy1.pos.Y += 10;
+                }
+            }
+
+            foreach (var enemy1 in enemies)
+            {
+                if (enemy1 == null)
+                {
+                    continue;
+                }
+
+                enemy1.pos += velocity;
+                enemy1.hitBox.X = (int)enemy1.pos.X;
+                enemy1.hitBox.Y = (int)enemy1.pos.Y;
+            }
+
+           
+
+        }
+        public void damage(int row, int column)
+        {
+            if(row < 0 || row >= Rows || column < 0 || column >= Column)
+            {
+                return;
+            }
+            enemies[row, column] = null;
         }
 
     }

@@ -58,9 +58,10 @@ public class Game1 : Game
 
     private GamePadState _gameState = new GamePadState();
 
-    private int score;
+    public int score;
 
     private SpriteFont _scoreFont;
+    private CollisionManager collisionManager = new();
 
     private bool isMouseOver = false;
 
@@ -79,7 +80,7 @@ public class Game1 : Game
     int timeSinceLastFrame = 0;
     int milliSecondsPerFrame = 100; 
     EnemyManager enemyManager;
-    int spacingX = 120;
+    int spacingX = 150;
     int spacingY = 120;
     int startX = 30;
     int startY = 100;
@@ -99,7 +100,7 @@ public class Game1 : Game
         _graphics = new GraphicsDeviceManager(this);
         Content.RootDirectory = "Content";
         _graphics.PreferredBackBufferHeight = 1000;
-        _graphics.PreferredBackBufferWidth = 1000;
+        _graphics.PreferredBackBufferWidth = 1400;
         _graphics.ApplyChanges();
         IsMouseVisible = true;
     }
@@ -110,13 +111,6 @@ public class Game1 : Game
         base.Initialize();
     }
  
-
-    /*public Enemy CreateEnemy(int i, int y, int windowWidth)
-    {
-        Vector2 velocity = new Vector2(5, 0); //ändra så de rör sig i x led istället
-        Enemy enemy = new Enemy(single_alien, new Vector2( i*165 + 15, y*100), velocity, windowWidth);
-        return enemy;
-    }*/
 
     public Player CreatePlayer()
     {
@@ -142,22 +136,13 @@ public class Game1 : Game
         Stars_panorama_sheet = Content.Load<Texture2D>("Stars_panorama_sheet");
         startRec = new Rectangle(windowWidth / 2 - Startknapp.Width / 2, windowHeight / 2 - Startknapp.Height, Startknapp.Width, Startknapp.Height);
         shoot = Content.Load<SoundEffect>("shoot");
-        enemyManager = new EnemyManager(single_alien, spacingX, spacingY, startX, startY, windowWidth, new Vector2 (5, 0));
-
-        /*for (int y = 0; y < 3; y++)
-        {
-            for (int i = 0; i < 6; i++)
-            {
-                enemy1 = CreateEnemy(i, y, windowWidth);
-                enemyList.Add(enemy1);
-            }
-        }*/
-
-
+        enemyManager = new EnemyManager(single_alien, spacingX, spacingY, startX, startY, windowWidth, new Vector2 (3, 0));
+        _scoreFont = Content.Load<SpriteFont>("File");
+       
         CreatePlayer();
 
     }
-    
+
 
     protected override void Update(GameTime gameTime)
     {
@@ -224,15 +209,16 @@ public class Game1 : Game
             {
                 Bullet1.bulletUpdate();
             }
+            collisionManager.checkCollision(enemyManager, bulletList);
                                                                                             
             /*foreach (var enemy1 in Enemy[Rows, Columns])
             {
                 enemy1.Updated();
             }*/
 
-            int n = enemyList.Count;
+            //int n = enemyList.Count;
 
-            for (int i = 0; i < n; i++) 
+            /*for (int i = 0; i < n; i++) 
             {
                 if(enemyList[i].isOut)
                 {
@@ -241,7 +227,7 @@ public class Game1 : Game
                     player1.looseLives();
                     player1.gameOver();
                 }
-            }
+            }*/
 
             int b = bulletList.Count;
 
@@ -253,12 +239,15 @@ public class Game1 : Game
                     b --;
                 }
             }
+            
 
-            for (int i = enemyList.Count -1; i >= 0; i--)
+            
+
+            /*foreach (var enemy1 in enemies)
             {
                 for (int k = bulletList.Count -1; k >= 0; k--)
                 {
-                    if (enemyList[i].hitBox.Intersects(bulletList[k].hitBox))
+                    if (var enemy1 inn enemies.hitBox.Intersects(bulletList[k].hitBox))
                     {
                         enemyList.RemoveAt(i);
                         bulletList.RemoveAt(k);
@@ -268,7 +257,7 @@ public class Game1 : Game
                         break;
                     }
                 }
-            }
+            }*/
 
             if(player1.playerDead) currentGameState = gameState.gameOver;
 
@@ -308,10 +297,7 @@ public class Game1 : Game
 
             enemyManager.Draw(_spriteBatch);
 
-            /*foreach (Enemy enemy in enemyList)
-            {
-                enemy.Draw(_spriteBatch);
-            }*/
+            _spriteBatch.DrawString(_scoreFont, "Points" + score, new Vector2(20, 20), Color.White);
 
             enemyManager.Draw(_spriteBatch);
 
@@ -328,7 +314,7 @@ public class Game1 : Game
 
         _spriteBatch.End();
 
-        Window.Title = $"Space Invaders - Score {score} - Lives {player1.lives}";
+        //Window.Title = $"Space Invaders - Score {score} - Lives {player1.lives}";
 
         base.Draw(gameTime);
     }

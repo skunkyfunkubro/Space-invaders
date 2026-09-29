@@ -39,6 +39,14 @@
 /processorParam:Version=3.8.5.1
 /build:bullet_SI-1.png
 
+#begin File.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/processorParam:Version=3.8.5.1
+/build:File.spritefont
+
 #begin game_over-2.png
 /importer:TextureImporter
 /processor:TextureProcessor

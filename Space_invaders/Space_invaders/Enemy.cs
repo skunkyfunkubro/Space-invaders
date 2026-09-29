@@ -10,7 +10,7 @@ public class Enemy
 {
     public Texture2D single_alien;
     public Vector2 pos;
-    public Vector2 velocity;
+    Vector2 velocity;
     int windowWidth;
 
     public bool isOut = false;
