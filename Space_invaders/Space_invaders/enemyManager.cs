@@ -13,6 +13,7 @@ namespace Space_invaders
         private const int Column = 5;
         int spacingX, spacingY, startX, startY, windowWidth;
         public Vector2 velocity = new Vector2(3, 0);
+        
 
     
 
@@ -30,6 +31,18 @@ namespace Space_invaders
                     enemies[row, column] = new Enemy(single_alien, spawnPosition, velocity, windowWidth);
                 }
             }
+        }
+
+        public bool IsAtBottom()
+        {
+            foreach(Enemy enemy in enemies)
+            {
+                if(enemy != null && enemy.pos.Y >= 950)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
 

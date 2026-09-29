@@ -211,7 +211,11 @@ public class Game1 : Game
             }
             collisionManager.checkCollision(enemyManager, bulletList);
             
-                                                                                            
+            if(enemyManager.IsAtBottom())
+            {
+                player1.looseLives();
+                player1.gameOver();
+            }                                                                                
             /*foreach (var enemy1 in Enemy[Rows, Columns])
             {
                 enemy1.Updated();
@@ -298,7 +302,7 @@ public class Game1 : Game
 
             enemyManager.Draw(_spriteBatch);
 
-            _spriteBatch.DrawString(_scoreFont, "Points" + score, new Vector2(20, 20), Color.White);
+            _spriteBatch.DrawString(_scoreFont, "Points " + score , new Vector2(20, 20), Color.White);
 
             enemyManager.Draw(_spriteBatch);
 
