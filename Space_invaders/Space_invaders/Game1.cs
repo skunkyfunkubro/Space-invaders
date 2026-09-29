@@ -38,6 +38,7 @@ public class Game1 : Game
     List<Bullet> bulletList;
 
     Texture2D Ship;
+    Texture2D space_light;
 
     Player player1; 
 
@@ -88,13 +89,8 @@ public class Game1 : Game
     int spacingX = 150;
     int spacingY = 120;
     int startX = 30;
-    int startY = 100;
-
-
+    int startY = 100; 
     SoundEffect shoot;
-    
-    
-
     gameState currentGameState = gameState.mainMenu;
 
   
@@ -139,6 +135,7 @@ public class Game1 : Game
         game_over2 = Content.Load<Texture2D>("game_over-2");
         Startknapp = Content.Load<Texture2D>("Startknapp");
         Stars_panorama_sheet = Content.Load<Texture2D>("Stars_panorama_sheet");
+        space_light = Content.Load<Texture2D>("space_light");
         startRec = new Rectangle(windowWidth / 2 - Startknapp.Width / 2, windowHeight / 2 - Startknapp.Height, Startknapp.Width, Startknapp.Height);
         shoot = Content.Load<SoundEffect>("shoot");
         space__0001_A2 = Content.Load<Texture2D>("space__0001_A2");
@@ -257,12 +254,12 @@ public class Game1 : Game
 
         if (currentGameState == gameState.mainMenu)
         {
+             _spriteBatch.Draw(space_light, new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.White);
             _spriteBatch.Draw(alien02_sprites, alienPos, new Rectangle(currentFrame.X * frameSize.X, currentFrame.Y * frameSize.Y, frameSize.X, frameSize.Y), Color.White, 0, Vector2.Zero, 1, SpriteEffects.None, 0);
             
             if(Startknapp != null)
             {
                 _spriteBatch.Draw(Startknapp, startRec, Color.White);
-                //_spriteBatch.Draw(pixel, startRec, Color.Red);
             }
             _spriteBatch.End();
             return;
@@ -275,7 +272,7 @@ public class Game1 : Game
 
             enemyManager.Draw(_spriteBatch);
 
-            _spriteBatch.DrawString(_scoreFont, "Points " + score , new Vector2(20, 20), Color.White);
+            _spriteBatch.DrawString(_scoreFont, "Points " + enemyManager.score , new Vector2(20, 20), Color.White);
             _spriteBatch.DrawString(_livesFont, "Lives " + player1.lives, new Vector2(1300, 20), Color.White);
 
             enemyManager.Draw(_spriteBatch);

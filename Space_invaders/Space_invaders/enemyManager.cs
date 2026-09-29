@@ -13,10 +13,8 @@ namespace Space_invaders
         private const int Column = 8;
         int spacingX, spacingY, startX, startY, windowWidth; 
         public Vector2 velocity = new Vector2(3, 0);
+        public int score {get; set;}
         
-        
-
-    
 
         public EnemyManager(Texture2D[] alienTexture, int spacingX, int spacingY, int startX, int startY, int windowWidth, Vector2 velocity)
         {
@@ -89,7 +87,7 @@ namespace Space_invaders
                     continue;
                 }
                 float nextX = enemy1.pos.X + velocity.X;
-                if (nextX < 0 || nextX > windowWidth - space__0001A2.Width)
+                if (nextX < 0 || nextX > windowWidth)
                 {
                     reachedEdge = true;
                     break;
@@ -128,6 +126,21 @@ namespace Space_invaders
                 return;
             }
             enemies[row, column] = null;
+        }
+
+        public static int getScoreForRow(int row)
+        {
+            return row switch
+            {
+                0 => 300,
+                1 => 200,
+                _ => 100
+            };
+        }
+
+        public void addScore(int amount)
+        {
+            score += amount;
         }
 
     }

@@ -34,26 +34,6 @@ public class Enemy
 
         hitBox = new Rectangle((int)pos.X, (int)pos.Y, single_alien.Width, single_alien.Height);
     }
-
-    public void Updated()
-    {
-        if (pos.X < 0 || pos.X > windowWidth - single_alien.Width) //Detta gör att de rör sig från border till border sen går ner en rad
-        {
-            velocity.X = velocity.X * -1;
-            pos.Y = pos.Y + single_alien.Height;
-        }
-        pos = pos + velocity;
-
-        if(pos.Y > 900 - single_alien.Height)
-        {
-            isOut = true;
-        }
-
-        hitBox.X = (int)pos.X;
-        hitBox.Y = (int)pos.Y;
-    }
-
-
     public void Draw(SpriteBatch _spriteBatch)
     {
         _spriteBatch.Draw(single_alien, pos, Color.White);

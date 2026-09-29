@@ -32,11 +32,13 @@ namespace Space_invaders
                             if(enemy.enemyLives <= 0)
                             {
                                 enemyManager.Dead(row, column);
+                                enemyManager.addScore(EnemyManager.getScoreForRow(row));
+                                //int score = EnemyManager.getScoreForRow(row);
                             }
                             hit = true;
                             break;
-                            
                         }
+                        
                         if (enemy == null)
                         {
                             continue;
