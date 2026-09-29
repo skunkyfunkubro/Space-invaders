@@ -18,6 +18,7 @@ public class Enemy
     public Rectangle hitBox;
     public int enemyLives {get; set; }
     
+    
 
     public Enemy(Texture2D single_alien, Vector2 pos, Vector2 velocity, int windowWidth, int enemyLives)
     {
@@ -29,6 +30,7 @@ public class Enemy
 
         this.windowWidth = windowWidth;
         this.enemyLives = enemyLives;
+        
 
         hitBox = new Rectangle((int)pos.X, (int)pos.Y, single_alien.Width, single_alien.Height);
     }

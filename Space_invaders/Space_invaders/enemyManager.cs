@@ -79,7 +79,7 @@ namespace Space_invaders
             }
         }
 
-        public void Update(GameTime gameTime, Texture2D single_alien)
+        public void Update(GameTime gameTime, Texture2D space__0001A2)
         {
             bool reachedEdge = false;
             foreach (var enemy1 in enemies)
@@ -89,7 +89,7 @@ namespace Space_invaders
                     continue;
                 }
                 float nextX = enemy1.pos.X + velocity.X;
-                if (nextX < 0 || nextX > windowWidth - single_alien.Width)
+                if (nextX < 0 || nextX > windowWidth - space__0001A2.Width)
                 {
                     reachedEdge = true;
                     break;

@@ -228,7 +228,7 @@ public class Game1 : Game
 
             int b = bulletList.Count;
 
-            for (int i = 0; i < b; i++) //lägg till foreach för out of bounds
+            for (int i = 0; i < b; i++) 
             {
                 if (bulletList[i].outOfBounds)
                 {
