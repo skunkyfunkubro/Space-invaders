@@ -29,13 +29,13 @@ namespace Space_invaders
                     Texture2D textureForThisRow;
                     int Lives;
 
-                    if(row < 2)
+                    if(row < 1)
                     {
                         textureForThisRow = alienTexture[0];
                         Lives = 3;
                     }
 
-                    else if(row < 3)
+                    else if(row < 2)
                     {
                         textureForThisRow = alienTexture[1];
                         Lives = 2;
@@ -87,7 +87,7 @@ namespace Space_invaders
                     continue;
                 }
                 float nextX = enemy1.pos.X + velocity.X;
-                if (nextX < 0 || nextX > windowWidth)
+                if (nextX < 0 || nextX > windowWidth - space__0001A2.Width)
                 {
                     reachedEdge = true;
                     break;
