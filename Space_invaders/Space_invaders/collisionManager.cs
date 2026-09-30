@@ -33,7 +33,6 @@ namespace Space_invaders
                             {
                                 enemyManager.Dead(row, column);
                                 enemyManager.addScore(EnemyManager.getScoreForRow(row));
-                                //int score = EnemyManager.getScoreForRow(row);
                             }
                             hit = true;
                             break;

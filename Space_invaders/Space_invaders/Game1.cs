@@ -217,10 +217,11 @@ public class Game1 : Game
             }
             collisionManager.checkCollision(enemyManager, bulletList);
             
-            if(enemyManager.IsAtBottom())
+            if(enemyManager.IsAtBottom(out int row, out int column))
             {
                 player1.looseLives();
                 player1.gameOver();
+                enemyManager.Dead(row, column);
             }                                                                           
 
             int b = bulletList.Count;

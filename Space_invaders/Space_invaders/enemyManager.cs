@@ -12,7 +12,7 @@ namespace Space_invaders
         private const int Rows = 5;
         private const int Column = 8;
         int spacingX, spacingY, startX, startY, windowWidth; 
-        public Vector2 velocity = new Vector2(3, 0);
+        public Vector2 velocity = new Vector2(10, 0);
         public int score {get; set;}
         
 
@@ -52,13 +52,20 @@ namespace Space_invaders
             }
         }
 
-        public bool IsAtBottom()
+        public bool IsAtBottom(out int row, out int column) //out används så jag kan ta ut int row och column
         {
-            foreach(Enemy enemy in enemies)
+            column = 0;
+            row = 0;
+            
+            for(row = 0; row < Rows; row++)
             {
-                if(enemy != null && enemy.pos.Y >= 900)
+                for(column = 0; column < Column; column++)
                 {
-                    return true;
+                    Enemy enemy = enemies[row, column];
+                    if(enemy != null && enemy.pos.Y >= 900)
+                    {
+                        return true;
+                    }
                 }
             }
             return false;
