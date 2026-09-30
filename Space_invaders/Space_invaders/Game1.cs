@@ -28,30 +28,31 @@ public class Game1 : Game
     Vector2 pos;
     Vector2 pos2;
 
-    Enemy enemy1;
+
     int windowWidth;
     int windowHeight;
     
 
-    List<Enemy> enemyList;
-
     List<Bullet> bulletList;
-
+    List<Stars> starsList;
     Texture2D Ship;
     Texture2D space_light;
 
     Player player1; 
 
     Bullet Bullet1;
+    Stars Stars1;
 
     Texture2D bullet_SI1;
 
     Texture2D game_over2;
 
     Texture2D Startknapp;
+    Texture2D star_01;
 
     Rectangle startRec;
     Texture2D Stars_panorama_sheet;
+    private Random random = new Random();
 
     private KeyboardState currentKeyBoardState;
 
@@ -123,8 +124,8 @@ public class Game1 : Game
     {
         _spriteBatch = new SpriteBatch(GraphicsDevice);
 
-        enemyList = new List<Enemy>();
         bulletList = new List<Bullet>();
+        starsList = new List<Stars>();
         windowWidth = Window.ClientBounds.Width;
         windowHeight = Window.ClientBounds.Height;
         alienPos = new Vector2((windowWidth - frameSize.X) / 2f, (windowHeight - frameSize.Y) / 2f);
@@ -144,6 +145,13 @@ public class Game1 : Game
         enemyManager = new EnemyManager(new [] {space__0001_A2, space__0002_B1, space__0003_B2}, spacingX, spacingY, startX, startY, windowWidth, new Vector2 (3, 0));
         _scoreFont = Content.Load<SpriteFont>("File");
         _livesFont = Content.Load<SpriteFont>("File");
+        star_01 = Content.Load<Texture2D>("star_01");
+
+        for(int i = 0; i < 6; i++)
+        {   
+            Stars1 = new Stars(star_01, new Vector2(random.Next(1000), random.Next(1000)));
+            starsList.Add(Stars1);
+        }
        
         CreatePlayer();
 
@@ -161,23 +169,23 @@ public class Game1 : Game
 
         
         if(currentGameState == gameState.mainMenu)
-        {
-            timeSinceLastFrame += gameTime.ElapsedGameTime.Milliseconds;
-            if(timeSinceLastFrame > milliSecondsPerFrame)
-            {
-                timeSinceLastFrame -= milliSecondsPerFrame;
-                ++currentFrame.X;
-                if(currentFrame.X >= sheetSize.X)
+        { 
+                timeSinceLastFrame += gameTime.ElapsedGameTime.Milliseconds;
+                if(timeSinceLastFrame > milliSecondsPerFrame)
                 {
-                    currentFrame.X = 0;
+                    timeSinceLastFrame -= milliSecondsPerFrame;
+                    ++currentFrame.X;
+                    if(currentFrame.X >= sheetSize.X)
+                    {
+                        currentFrame.X = 0;
+                    }
+                    
+                    if (alienPos.X < 0 || alienPos.X > windowWidth - alien02_sprites.Width / 4) //Detta gör att de rör sig från border till border sen går ner en rad
+                    {
+                        alienVelocity.X = alienVelocity.X * -1;
+                    }
+                    alienPos = alienPos += alienVelocity;
                 }
-                
-                if (alienPos.X < 0 || alienPos.X > windowWidth - alien02_sprites.Width / 4) //Detta gör att de rör sig från border till border sen går ner en rad
-                {
-                    alienVelocity.X = alienVelocity.X * -1;
-                }
-                alienPos = alienPos += alienVelocity;
-            }
 
             if (startRec.Contains(mouseState.Position) && mouseState.LeftButton == ButtonState.Pressed)
             {
@@ -202,7 +210,7 @@ public class Game1 : Game
             {
                 Vector2 playerPos = player1.getPosition();
                 playerPos.X = playerPos.X + player1.Ship.Width / 2 - bullet_SI1.Width / 2;
-                Bullet1 = new Bullet(playerPos,bullet_SI1);
+                Bullet1 = new Bullet(playerPos, bullet_SI1);
                 bulletList.Add(Bullet1);
                 shoot.Play();
             }
@@ -241,7 +249,10 @@ public class Game1 : Game
         
         if(currentGameState == gameState.gameOver)
         {
-            //lägg in kod för att displaya poäng
+            foreach(Stars Star1 in starsList)
+            {
+                Star1.starAnimation(gameTime);
+            }
         }
 
         base.Update(gameTime);
@@ -255,9 +266,9 @@ public class Game1 : Game
 
         if (currentGameState == gameState.mainMenu)
         {
-             _spriteBatch.Draw(space_light, new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.White);
+            _spriteBatch.Draw(space_light, new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.White);
             _spriteBatch.Draw(alien02_sprites, alienPos, new Rectangle(currentFrame.X * frameSize.X, currentFrame.Y * frameSize.Y, frameSize.X, frameSize.Y), Color.White, 0, Vector2.Zero, 1, SpriteEffects.None, 0);
-            
+
             if(Startknapp != null)
             {
                 _spriteBatch.Draw(Startknapp, startRec, Color.White);
@@ -286,7 +297,11 @@ public class Game1 : Game
         
         if(currentGameState == gameState.gameOver)
         {
-             _spriteBatch.Draw(game_over2, new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.White);
+            _spriteBatch.Draw(game_over2, new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.White);
+            foreach(Stars Stars1 in starsList)
+            {
+                Stars1.Draw(_spriteBatch);
+            }
         }
 
         _spriteBatch.End();
