@@ -79,13 +79,6 @@ public class Game1 : Game
     public Texture2D space__0003_B2;
     public Texture2D alien02_sprites;
     public Texture2D alien03_sprites;
-    Point frameSize = new Point (75, 75);
-    Point currentFrame = new Point(0, 0);
-    Point sheetSize = new Point(6, 8);
-    Vector2 alienPos;
-    Vector2 alienVelocity = new Vector2(5, 0);
-    int timeSinceLastFrame = 0;
-    int milliSecondsPerFrame = 100; 
     EnemyManager enemyManager;
     int spacingX = 150;
     int spacingY = 120;
@@ -128,7 +121,6 @@ public class Game1 : Game
         starsList = new List<Stars>();
         windowWidth = Window.ClientBounds.Width;
         windowHeight = Window.ClientBounds.Height;
-        alienPos = new Vector2((windowWidth - frameSize.X) / 2f, (windowHeight - frameSize.Y) / 2f);
         single_alien = Content.Load<Texture2D>("single_alien");
         Ship = Content.Load<Texture2D>("Ship");
         bullet_SI1 = Content.Load<Texture2D>("bullet_SI-1");
@@ -171,27 +163,11 @@ public class Game1 : Game
         if(currentGameState == gameState.mainMenu)
         { 
                 
-                foreach(Stars Star1 in starsList)
-                {
-                    Star1.starAnimation(gameTime);
-                }
-                timeSinceLastFrame += gameTime.ElapsedGameTime.Milliseconds;
-                if(timeSinceLastFrame > milliSecondsPerFrame)
-                {
-                    timeSinceLastFrame -= milliSecondsPerFrame;
-                    ++currentFrame.X;
-                    if(currentFrame.X >= sheetSize.X)
-                    {
-                        currentFrame.X = 0;
-                    }
-                    
-                    if (alienPos.X < 0 || alienPos.X > windowWidth - alien02_sprites.Width / 4) //Detta gör att de rör sig från border till border sen går ner en rad
-                    {
-                        alienVelocity.X = alienVelocity.X * -1;
-                    }
-                    alienPos = alienPos += alienVelocity;
-                }
-
+            foreach(Stars Star1 in starsList)
+            {
+                Star1.starAnimation(gameTime);
+            }
+    
             if (startRec.Contains(mouseState.Position) && mouseState.LeftButton == ButtonState.Pressed)
             {
                 currentGameState = gameState.easyMode;
