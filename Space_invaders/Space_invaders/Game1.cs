@@ -318,6 +318,7 @@ public class Game1 : Game
 
         if(currentGameState == gameState.victory)
         {
+            _spriteBatch.Draw(space_light, new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.White);
             _spriteBatch.Draw(Fortnite, new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.White);
             foreach(Stars Stars1 in starsList)
             {
@@ -327,6 +328,7 @@ public class Game1 : Game
         
         if(currentGameState == gameState.gameOver)
         {
+            _spriteBatch.Draw(space_light, new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.White);
             _spriteBatch.Draw(game_over2, new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.White);
             foreach(Stars Stars1 in starsList)
             {
