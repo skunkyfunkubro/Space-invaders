@@ -248,6 +248,8 @@ public class Game1 : Game
                 }
             }
 
+            if(enemyManager.score == 6400) currentGameState = gameState.gameOver;
+
             if(player1.playerDead) currentGameState = gameState.gameOver;
 
         }
