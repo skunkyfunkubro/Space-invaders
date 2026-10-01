@@ -37,7 +37,7 @@ public class Game1 : Game
     List<Stars> starsList;
     Texture2D Ship;
     Texture2D space_light;
-
+    Texture2D Fortnite;
     Player player1; 
 
     Bullet Bullet1;
@@ -71,7 +71,7 @@ public class Game1 : Game
     //Texture2D pixel;
     private enum gameState
     {
-        mainMenu, easyMode, hardMode, gameOver
+        mainMenu, easyMode, victory, gameOver
     }
 
     public Texture2D space__0001_A2;
@@ -119,6 +119,7 @@ public class Game1 : Game
 
         bulletList = new List<Bullet>();
         starsList = new List<Stars>();
+        Fortnite = Content.Load<Texture2D>("Fortnite");
         windowWidth = Window.ClientBounds.Width;
         windowHeight = Window.ClientBounds.Height;
         single_alien = Content.Load<Texture2D>("single_alien");
@@ -224,13 +225,45 @@ public class Game1 : Game
                 }
             }
 
-            if(enemyManager.score == 6400) currentGameState = gameState.gameOver;
+            if(enemyManager.score == 6400) currentGameState = gameState.victory;
 
             if(player1.playerDead) currentGameState = gameState.gameOver;
 
         }
         
         if(currentGameState == gameState.gameOver)
+        {
+            foreach(Stars Star1 in starsList)
+            {
+                Star1.starAnimation(gameTime);
+            }
+        }
+
+        if(currentGameState == gameState.gameOver)
+        {
+            foreach(Stars Star1 in starsList)
+            {
+                Star1.starAnimation(gameTime);
+            }
+        }
+
+        if(currentGameState == gameState.gameOver)
+        {
+            foreach(Stars Star1 in starsList)
+            {
+                Star1.starAnimation(gameTime);
+            }
+        }
+
+        if(currentGameState == gameState.gameOver)
+        {
+            foreach(Stars Star1 in starsList)
+            {
+                Star1.starAnimation(gameTime);
+            }
+        }
+        
+        if(currentGameState == gameState.victory)
         {
             foreach(Stars Star1 in starsList)
             {
@@ -267,7 +300,7 @@ public class Game1 : Game
         
         if(currentGameState == gameState.easyMode)
         {
-             _spriteBatch.Draw(Stars_panorama_sheet, new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.White);
+            _spriteBatch.Draw(Stars_panorama_sheet, new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.White);
             _spriteBatch.Draw(Ship, player1.getPosition(), Color.White);
 
             enemyManager.Draw(_spriteBatch);
@@ -280,6 +313,15 @@ public class Game1 : Game
             foreach (Bullet Bullet1 in bulletList)
             {
                 Bullet1.Draw(_spriteBatch);
+            }
+        }
+
+        if(currentGameState == gameState.victory)
+        {
+            _spriteBatch.Draw(Fortnite, new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.White);
+            foreach(Stars Stars1 in starsList)
+            {
+                Stars1.Draw(_spriteBatch);
             }
         }
         
