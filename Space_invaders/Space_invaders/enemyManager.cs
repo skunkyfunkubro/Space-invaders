@@ -62,7 +62,7 @@ namespace Space_invaders
                 for(column = 0; column < Column; column++)
                 {
                     Enemy enemy = enemies[row, column];
-                    if(enemy != null && enemy.pos.Y >= 900)
+                    if(enemy != null && enemy.pos.Y >= 750)
                     {
                         return true;
                     }
@@ -94,7 +94,7 @@ namespace Space_invaders
                     continue;
                 }
                 float nextX = enemy1.pos.X + velocity.X;
-                if (nextX < 0 || nextX > windowWidth - space__0001A2.Width)
+                if (nextX < 0 || nextX > windowWidth - space__0001A2.Width / 2)
                 {
                     reachedEdge = true;
                     break;

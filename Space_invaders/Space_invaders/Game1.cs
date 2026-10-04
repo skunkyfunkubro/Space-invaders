@@ -94,7 +94,7 @@ public class Game1 : Game
     {
         _graphics = new GraphicsDeviceManager(this);
         Content.RootDirectory = "Content";
-        _graphics.PreferredBackBufferHeight = 1000;
+        _graphics.PreferredBackBufferHeight = 900;
         _graphics.PreferredBackBufferWidth = 1400;
         _graphics.ApplyChanges();
         IsMouseVisible = true;
@@ -142,7 +142,7 @@ public class Game1 : Game
 
         for(int i = 0; i < 6; i++)
         {   
-            Stars1 = new Stars(star_01, new Vector2(random.Next(1000), random.Next(1000)));
+            Stars1 = new Stars(star_01, new Vector2(random.Next(windowWidth), random.Next(windowHeight)));
             starsList.Add(Stars1);
         }
        
@@ -227,6 +227,7 @@ public class Game1 : Game
 
             if(enemyManager.score == 6400) currentGameState = gameState.victory;
 
+
             if(player1.playerDead) currentGameState = gameState.gameOver;
 
         }
@@ -239,30 +240,6 @@ public class Game1 : Game
             }
         }
 
-        if(currentGameState == gameState.gameOver)
-        {
-            foreach(Stars Star1 in starsList)
-            {
-                Star1.starAnimation(gameTime);
-            }
-        }
-
-        if(currentGameState == gameState.gameOver)
-        {
-            foreach(Stars Star1 in starsList)
-            {
-                Star1.starAnimation(gameTime);
-            }
-        }
-
-        if(currentGameState == gameState.gameOver)
-        {
-            foreach(Stars Star1 in starsList)
-            {
-                Star1.starAnimation(gameTime);
-            }
-        }
-        
         if(currentGameState == gameState.victory)
         {
             foreach(Stars Star1 in starsList)

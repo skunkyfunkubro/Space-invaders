@@ -44,6 +44,6 @@ public class Stars
     public void Draw(SpriteBatch _spriteBatch)
     {
         var source = new Rectangle(currentFrame.X * frameSize.X, currentFrame.Y * frameSize.Y, frameSize.X, frameSize.Y);
-        _spriteBatch.Draw(stars_01, starsPos, source, Color.White);
+        _spriteBatch.Draw(stars_01, starsPos, source, Color.Yellow);
     }
 }
