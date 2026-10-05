@@ -260,7 +260,6 @@ public class Game1 : Game
         if (currentGameState == gameState.mainMenu)
         {
             _spriteBatch.Draw(space_light, new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.White);
-            //_spriteBatch.Draw(alien02_sprites, alienPos, new Rectangle(currentFrame.X * frameSize.X, currentFrame.Y * frameSize.Y, frameSize.X, frameSize.Y), Color.White, 0, Vector2.Zero, 1, SpriteEffects.None, 0);
 
             foreach(Stars Stars1 in starsList)
             {
